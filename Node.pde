@@ -13,7 +13,6 @@ class Node {
     this.y = y;
     radius = 10;
     this.maxRadius = maxRadius;
-    //growthRate = random(0, 5);
     growthRate = 20;
     volatileRadius = maxRadius + 2;
   }
@@ -42,7 +41,6 @@ class Node {
     textSize(15);
     fill(255, 255, 255);
     textAlign(CENTER, CENTER);
-    text(radius, x, y);
   }
 
   void absorbProjectile() {

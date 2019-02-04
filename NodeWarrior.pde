@@ -7,6 +7,7 @@ EnemyController enemyController;
 SceneController sceneController;
 ArrayList<Projectile> projectilesToBeAdded;
 Timer gameTimer;
+double bestTime;
 
 void setup() {
   strokeWeight(2);
@@ -14,6 +15,7 @@ void setup() {
   rectMode(CENTER);
   sceneController = new SceneController();
   sceneController.restart();
+  bestTime = 100000;
 }
 
 void draw() {
@@ -21,8 +23,7 @@ void draw() {
 }
 
 void mouseClicked() {
-  if(sceneController.scene == sceneController.GAMEOVER) {
-    print("CLICKED");
+  if (sceneController.scene != sceneController.MAIN) {
     sceneController.restart();
     sceneController.setScene(sceneController.MAIN);
   }

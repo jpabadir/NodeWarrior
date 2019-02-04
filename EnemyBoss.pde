@@ -3,9 +3,9 @@ class EnemyBoss {
   float x; 
   float y;
   float radius;
-  float health;
+  int health;
   
-  EnemyBoss(float x, float y, float radius, float health) {
+  EnemyBoss(float x, float y, float radius, int health) {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -23,5 +23,12 @@ class EnemyBoss {
   
   void takeDamage() {
    health--;
+   if(health <= 0) {
+    die(); 
+   }
+  }
+  
+  void die() {
+    sceneController.setScene(sceneController.VICTORY);
   }
 }
