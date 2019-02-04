@@ -5,18 +5,25 @@ ArrayList<Projectile> projectiles;
 EnemyBoss boss;
 EnemyController enemyController;
 SceneController sceneController;
+ArrayList<Projectile> projectilesToBeAdded;
+Timer gameTimer;
 
 void setup() {
-  sceneController = new SceneController();
+  strokeWeight(2);
   size(1200, 700);
   rectMode(CENTER);
-  player = new Player();
-  nodeController = new NodeController();
-  projectiles = new ArrayList();
-  boss = new EnemyBoss(90 * width / 100, height / 2, 50, 100);
-  enemyController = new EnemyController();
+  sceneController = new SceneController();
+  sceneController.restart();
 }
 
 void draw() {
   sceneController.update();
+}
+
+void mouseClicked() {
+  if(sceneController.scene == sceneController.GAMEOVER) {
+    print("CLICKED");
+    sceneController.restart();
+    sceneController.setScene(sceneController.MAIN);
+  }
 }

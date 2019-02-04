@@ -23,6 +23,5 @@ class EnemyBoss {
   
   void takeDamage() {
    health--;
-   print("OUCH ");
   }
 }

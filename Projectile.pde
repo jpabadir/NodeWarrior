@@ -15,6 +15,10 @@ class Projectile {
   }
 
   void update() {
+    if(isFlagged) {
+     return; 
+    }
+    
     x += velocity.x;
     y += velocity.y;
     fill(c);
@@ -30,7 +34,17 @@ class Projectile {
     for(Enemy enemy: enemyController.enemies) {
       if(isCollidingWithEnemy(enemy)) {
         isFlagged = true;
-        enemy.isFlagged = true;
+        enemy.health--;
+        if(enemy.health <= 0) {
+          enemy.isFlagged = true;  
+        }
+      }
+    }
+    
+    for(Node node: nodeController.nodes) {
+      if(isCollidingWithNode(node)) {
+        node.absorbProjectile();
+        isFlagged = true;
       }
     }
   }
@@ -45,5 +59,9 @@ class Projectile {
   
   boolean isCollidingWithEnemy(Enemy enemy) {
       return dist(x, y, enemy.x, enemy.y) < radius + enemy.size / 2; 
+  }
+  
+  boolean isCollidingWithNode(Node node) {
+    return dist(x, y, node.x, node.y) < radius + node.radius;
   }
 }

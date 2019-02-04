@@ -14,8 +14,8 @@ class NodeController {
    lowerX = 100;
    upperX = width - 300;
    timer = new Timer();
-   spawnTime = 1;
-   maxNodes = 15;
+   spawnTime = 0.5;
+   maxNodes = 30;
    createNodes(5);
   }
   
@@ -27,8 +27,8 @@ class NodeController {
 
     ArrayList<Node> collidedNodes = new ArrayList(); 
     for(Node node: nodes) {
-      node.display();
-      if (node.hasCollided) {
+      node.update();
+      if (node.isFlagged) {
        collidedNodes.add(node); 
       }
     }

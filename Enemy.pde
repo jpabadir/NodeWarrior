@@ -1,29 +1,50 @@
 
+
+/*
+
+ - damage attribute is visually shown by how many spikes an enemy spikes around it # spikes = 360 / damage and then dispaly them
+ - health could be border- DONE
+ - speed is size  - DONE
+ - color is overall power - DONE
+ - spikes!!!
+ 
+ */
+
 class Enemy {
   float x;
   float y;
-  float size;
-  float speed;
+  int size;
+  int speed;
   boolean isFlagged;
+  int damage;
+  int power;
+  int health; 
+  PShape shape;
+  int numberSpikes;
 
-  Enemy(float x, float y, float size, float speed) {
-    this.x = x;
-    this.y = y;
-    this.size = size;
-    this.speed = speed;
+  void init() {
+    shape = createShape();
+    shape.beginShape();
+    numberSpikes = damage + 2;
+    for (int i = 0; i < numberSpikes * 2; i++) {
+      shape.vertex(0, 0);
+    }
+    shape.endShape(CLOSE);
   }
 
   void update() {
+    if (isFlagged) {
+      return;
+    }
     PVector v = getVelocity();
     x += v.x;
     y += v.y;
 
-    fill(255, 0, 0);
-    rect(x, y, size, size);
-    
-    if(isCollidingWithPlayer()) {
-     isFlagged = true; 
-     player.takeDamage();
+    display();
+
+    if (isCollidingWithPlayer()) {
+      isFlagged = true; 
+      player.takeDamage(damage);
     }
   }
 
@@ -33,8 +54,22 @@ class Enemy {
     velocity.y *= speed;
     return velocity;
   }
-  
+
   boolean isCollidingWithPlayer() {
     return dist(x, y, player.x, player.y) < (size + player.size) / 2;
+  }
+
+  void display() {
+    float angleBetweenSpikes = PI / numberSpikes;
+    for (int i = 0; i < numberSpikes * 2; i++) {
+      float angle = i * angleBetweenSpikes;
+      int scalar = (i % 2 == 0)? size: size / 2;
+      float shapeX = x + scalar * cos(angle);
+      float shapeY = y + scalar * sin(angle);
+      shape.setVertex(i, shapeX, shapeY);
+    }
+    shape.setFill(color(map(power, 1, 10, 0, 255), 0, 0));
+    shape.setStrokeWeight(health);
+    shape(shape);
   }
 }
